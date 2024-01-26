@@ -1,0 +1,9 @@
+{
+    "tasks": {
+        "start":"deno run --allow-net server.ts",
+        "build":"deno run -A server.ts build",
+        "dev": "deno run -A --watch server.ts"
+    },
+    
+    "nodeModulesDir": true
+}
