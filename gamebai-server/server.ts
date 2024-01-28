@@ -55,12 +55,15 @@ class Deck {
 
 const BOOK_ROUTE = new URLPattern({ pathname: "/books/:id" });
 const HOME_ROUTE = new URLPattern({ pathname: "/" });
+const SERVER_DATETIME_STREAM_ROUTE = new URLPattern({ pathname: "/stream" });
 const WEB_SOCKET_ROUTE = new URLPattern({ pathname: "/websocket" });
-Deno.serve((req) => {
+
+Deno.serve({ hostname: "0.0.0.0" , port:8000}, (req) => {
   // 
   const match = BOOK_ROUTE.exec(req.url);
   const match_home_url = HOME_ROUTE.exec(req.url);
   const match_websocket_url = WEB_SOCKET_ROUTE.exec(req.url);
+  const match_server_stream_url = SERVER_DATETIME_STREAM_ROUTE.exec(req.url);
 
   if (match) {
     const id = match.pathname.groups.id;
@@ -69,6 +72,10 @@ Deno.serve((req) => {
   if (match_home_url) {
     return new Response("Welcome Deno Web App");
   }
+  if (match_server_stream_url) {
+    return new Response("Welcome Deno Web Streaming App");
+  }
+
 
   if (match_websocket_url) {
     console.log("match_websocket_url");
@@ -83,11 +90,21 @@ Deno.serve((req) => {
     });
 
     socket.addEventListener("message", (event) => {
-      if (event.data === "ping") {
-        socket.send("pong");
-      }
-      if (event.data === "CHIA_BAI") {
-        socket.send("CHIA_BAI");
+      // if (event.data === "ping") {
+      //   socket.send("pong");
+      // }
+      // if (event.data === "CHIA_BAI") {
+      //   const obj = {
+      //     command: "CHIA_BAI",
+      //     numbers: [1, 2, 3],
+      //   };
+      //   const json = JSON.stringify(obj);
+      //   socket.send(json)
+      // }
+      switch (event.data) {
+        case "ping": socket.send("pong"); break;
+        case "CHIA_BAI": socket.send("CHIA_BAI"); break;
+        default: socket.send("Not Found"); break;
       }
     });
 
