@@ -1,0 +1,7 @@
+{
+    "tasks": {
+        "start": "deno run --allow-net http-server-streaming.ts",
+        "build": "deno run -A http-server-streaming.ts build",
+        "dev": "deno run -A --http-server-streaming server.ts"
+    }
+}
