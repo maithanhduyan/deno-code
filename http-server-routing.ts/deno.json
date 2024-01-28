@@ -1,0 +1,7 @@
+{
+    "tasks": {
+        "start": "deno run --allow-net http-server-routing.ts",
+        "build": "deno run -A http-server-routing.ts build",
+        "dev": "deno run -A --watch http-server-routing.ts"
+    }
+}
