@@ -1,0 +1,7 @@
+{
+    "tasks": {
+        "start":"deno run --allow-net fetch.ts",
+        "build":"deno run -A fetch.ts build",
+        "dev": "deno run -A --watch fetch.ts"
+    }
+}
